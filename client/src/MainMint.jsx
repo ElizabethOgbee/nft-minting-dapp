@@ -1,7 +1,6 @@
 import { ethers, BigNumber } from 'ethers'
 import { useState} from 'react'
 import { Box, Button, Flex, Input, Text} from '@chakra-ui/react'
-
 import roboPunksNFT from './RoboPunksNFT.json'
 
 const roboPunksNFTAddress = "0x6369D66Daf2d8cc423d829AB76ec337B8fCDfC72" 
@@ -22,7 +21,9 @@ function MainMint({accounts, setAccounts}) {
           // we will try and catch the code above incase it fails
           try{
             const response = await contract.mint
-            (BigNumber.from(mintAmount));
+            (BigNumber.from(mintAmount), {
+              value: ethers.utils.parseEther((0.02 * mintAmount).toString())
+            })  ;
             console.log("response:", response);
           } catch(err){
             console.error("error:", err);
@@ -41,22 +42,56 @@ function MainMint({accounts, setAccounts}) {
           }
 
   return (
-    <div>
-      <h1>RoboPunks</h1>
-      <p>It's 2078. Can the RoboPunks NFT save humans from destructive rampant NFT speculation? Mint RoboPunks to find out.</p>
+    <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
+      <Box width="120px">
+        <div>
+      <Text fontSize="48px" textShadow="0 5px #000000">RoboPunks</Text>
+      <Text fontFamily="VT323" fontSize="30px" letterSpacing="-5.5%" textShadow="0 2px 2px #000000" >
+        It's 2078. Can the RoboPunks NFT save humans from destructive rampant NFT speculation? Mint RoboPunks to find out.</Text>
+      </div>
+
       {isConnected ? (
         <div className="">
-                  <div className="">
-                    <button onClick={handleDecrement}>-</button>
-                    <input type="number" value={mintAmount}/>
+                  <Flex className="">
+                    <Button
+                         backgroundColor="#D6517D"
+                         borderRadius= "5px"
+                         boxShadow="0px 2px 2px 1px #DFDFDF"
+                         color="white"
+                         cursor="pointer"
+                         fontFamily="inherit"
+                         padding="15px"
+                         margin="0 15px"
+                         onClick={handleDecrement}>-</Button>
+                    <input
+                         readOnly
+                         backgroundColor="#D6517D"
+                         borderRadius= "5px"
+                         boxShadow="0px 2px 2px 1px #DFDFDF"
+                         color="white"
+                         cursor="pointer"
+                         fontFamily="inherit"
+                         padding="15px"
+                         margin="0 15px"
+                         type="number" value={mintAmount}/>
                     <button onClick={handleIncrement}>+</button>
-                  </div>
-                  <button onClick={handleMint}>Mint Now</button>
+                  </Flex>
+                  <Button
+                       backgroundColor="#D6517D"
+                       borderRadius= "5px"
+                       boxShadow="0px 2px 2px 1px #DFDFDF"
+                       color="white"
+                       cursor="pointer"
+                       fontFamily="inherit"
+                       padding="15px"
+                       margin="0 15px"
+                       onClick={handleMint}>Mint Now</Button>
         </div>
       ) : (
-        <p>You are not connected yet Connect to Metamask and mint</p>
+        <Text>You are not connected yet Connect to Metamask and mint</Text>
       )}
-    </div> 
+      </Box>
+    </Flex> 
   )
 }
 
