@@ -58,4 +58,6 @@ contract RoboPunksNFT is ERC721, Ownable {
             _safeMint(msg.sender, newTokenId);
         }
     }
+
+    function stake()
 }
