@@ -59,5 +59,5 @@ contract RoboPunksNFT is ERC721, Ownable {
         }
     }
 
-    function stake(){}
+    function stake() public {}
 }
